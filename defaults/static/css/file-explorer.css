@@ -226,10 +226,11 @@ body.explorer-open .file-explorer {
   z-index: 997;
 }
 
-/* Desktop: sidebar pushes content */
+/* Desktop: sidebar pushes content. Use padding on body so the container's
+   `margin: 0 auto` keeps the content centered in the remaining space. */
 @media (min-width: 768px) {
-  body.explorer-open .container {
-    margin-left: var(--explorer-width);
+  body.explorer-open {
+    padding-left: var(--explorer-width);
   }
   body.explorer-open .explorer-toggle {
     left: calc(var(--explorer-width) + 20px);
