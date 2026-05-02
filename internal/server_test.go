@@ -60,6 +60,47 @@ func TestRegularFileStillSupportsConditionalRequests(t *testing.T) {
 	}
 }
 
+func TestMarkdownTitleUsesFirstH1(t *testing.T) {
+	t.Parallel()
+
+	tmpDir := t.TempDir()
+	body := []byte("intro paragraph\n\n# My Document\n\n## Subsection\n")
+	if err := os.WriteFile(filepath.Join(tmpDir, "doc.md"), body, 0o644); err != nil {
+		t.Fatalf("write doc.md: %v", err)
+	}
+
+	server := NewServer("localhost", 6419, false, false, false, NewParser())
+	handler := server.newHandler(http.Dir(tmpDir))
+
+	req := httptest.NewRequest(http.MethodGet, "/doc.md", nil)
+	recorder := httptest.NewRecorder()
+	handler.ServeHTTP(recorder, req)
+
+	if !strings.Contains(recorder.Body.String(), "<title>My Document</title>") {
+		t.Fatalf("expected <title>My Document</title>, got %q", recorder.Body.String())
+	}
+}
+
+func TestMarkdownTitleFallsBackToFilename(t *testing.T) {
+	t.Parallel()
+
+	tmpDir := t.TempDir()
+	if err := os.WriteFile(filepath.Join(tmpDir, "notes.md"), []byte("just a paragraph\n"), 0o644); err != nil {
+		t.Fatalf("write notes.md: %v", err)
+	}
+
+	server := NewServer("localhost", 6419, false, false, false, NewParser())
+	handler := server.newHandler(http.Dir(tmpDir))
+
+	req := httptest.NewRequest(http.MethodGet, "/notes.md", nil)
+	recorder := httptest.NewRecorder()
+	handler.ServeHTTP(recorder, req)
+
+	if !strings.Contains(recorder.Body.String(), "<title>notes</title>") {
+		t.Fatalf("expected <title>notes</title> fallback, got %q", recorder.Body.String())
+	}
+}
+
 func TestMarkdownResponsesDisableCaching(t *testing.T) {
 	t.Parallel()
 

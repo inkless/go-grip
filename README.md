@@ -61,10 +61,10 @@ graph TD;
 ```go
 package main
 
-import "github.com/chrishrb/go-grip/cmd"
+import "github.com/inkless/go-grip/cmd"
 
 func main() {
-	fmt.Sprintln("Welcome to Grip! Use `go-grip --help` for more information.")
+	fmt.Sprintln("Welcome to Grip! Use `grip --help` for more information.")
 }
 ```
 
@@ -80,7 +80,7 @@ func main() {
 To install go-grip, simply:
 
 ```bash
-go install github.com/chrishrb/go-grip@latest
+go install github.com/inkless/go-grip@latest
 ```
 
 > [!TIP]
@@ -92,9 +92,9 @@ go install github.com/chrishrb/go-grip@latest
 To render the `README.md` file simply execute:
 
 ```bash
-go-grip README.md
+grip README.md
 # or
-go-grip
+grip
 ```
 
 The browser will automatically open on http://localhost:6419. You can disable this behaviour with the `-b=false` option.
@@ -102,25 +102,25 @@ The browser will automatically open on http://localhost:6419. You can disable th
 You can also specify a port:
 
 ```bash
-go-grip -p 80 README.md
+grip -p 80 README.md
 ```
 
 or just open a file-tree with all available files in the current directory:
 
 ```bash
-go-grip -r=false
+grip -r=false
 ```
 
 It's also possible to activate the darkmode:
 
 ```bash
-go-grip -d .
+grip -d .
 ```
 
 To disable automatic browser reload on file changes (useful for stable editing):
 
 ```bash
-go-grip --no-reload README.md
+grip --no-reload README.md
 ```
 
 To terminate the current server simply press `CTRL-C`.

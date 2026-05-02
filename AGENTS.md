@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 `go-grip` is a Go CLI that serves Markdown files locally as GitHub-styled HTML. It is a pure-Go reimplementation of [grip](https://github.com/joeyespo/grip) that does not call GitHub's API — all rendering happens in-process via [goldmark](https://github.com/yuin/goldmark) extensions.
 
-Module path: `github.com/chrishrb/go-grip`. Go 1.25.
+Module path: `github.com/inkless/go-grip`. Go 1.25.
 
 ## Commands
 

@@ -3,6 +3,7 @@ package internal
 import (
 	"bytes"
 	"fmt"
+	"html"
 	"io"
 	"log"
 	"net/http"
@@ -15,7 +16,7 @@ import (
 	"github.com/aarol/reload"
 	chroma_html "github.com/alecthomas/chroma/v2/formatters/html"
 	"github.com/alecthomas/chroma/v2/styles"
-	"github.com/chrishrb/go-grip/defaults"
+	"github.com/inkless/go-grip/defaults"
 )
 
 type Server struct {
@@ -106,13 +107,18 @@ func (s *Server) newHandler(dir http.Dir) http.Handler {
 					log.Fatal(err)
 					return
 				}
-				htmlContent, err := s.parser.MdToHTML(bytes)
+				htmlContent, title, err := s.parser.MdToHTML(bytes)
 				if err != nil {
 					log.Fatal(err)
 					return
 				}
+				if title == "" {
+					base := path.Base(r.URL.Path)
+					title = strings.TrimSuffix(base, path.Ext(base))
+				}
 
 				err = serveTemplate(w, htmlStruct{
+					Title:        html.EscapeString(title),
 					Content:      string(htmlContent),
 					BoundingBox:  s.boundingBox,
 					CssCodeLight: getCssCode("github"),
@@ -155,6 +161,7 @@ func readToString(dir http.Dir, filename string) ([]byte, error) {
 }
 
 type htmlStruct struct {
+	Title        string
 	Content      string
 	BoundingBox  bool
 	CssCodeLight string
