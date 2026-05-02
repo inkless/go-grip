@@ -51,6 +51,16 @@
   --explorer-toggle-fg: #656d76;
 }
 
+/* While the page is in its initial paint, suppress transitions so the
+   sidebar (and theme) snap straight to their persisted state instead of
+   animating from a default on every navigation. The `preload` class is
+   added by an inline script in <head> and removed by file-explorer.js
+   on the next animation frame. */
+html.preload .file-explorer,
+html.preload .explorer-backdrop {
+  transition: none !important;
+}
+
 /* Sidebar shell */
 .file-explorer {
   position: fixed;

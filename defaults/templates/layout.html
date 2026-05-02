@@ -3,6 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      // Sync — runs before <body> renders. Suppresses transitions until
+      // first paint so the sidebar doesn't animate from off-screen into
+      // its persisted state on every page load.
+      document.documentElement.classList.add("preload");
+    </script>
     <title>{{ .Title }}</title>
     <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
     <link

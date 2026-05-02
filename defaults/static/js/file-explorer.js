@@ -30,9 +30,21 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    if (!document.getElementById("file-explorer")) return;
+    if (!document.getElementById("file-explorer")) {
+      // Still drop preload so other transitions (theme toggle) work.
+      requestAnimationFrame(function () {
+        document.documentElement.classList.remove("preload");
+      });
+      return;
+    }
 
     applyState(getPreference());
+
+    // After the initial state has been applied and the next frame paints,
+    // re-enable transitions so deliberate toggles animate normally.
+    requestAnimationFrame(function () {
+      document.documentElement.classList.remove("preload");
+    });
 
     var btn = document.getElementById("explorer-toggle");
     if (btn) btn.addEventListener("click", toggle);
