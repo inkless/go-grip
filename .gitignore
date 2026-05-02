@@ -1,3 +1,9 @@
 vendor
 result
 bin
+
+.DS_Store
+
+.claude/*.local.*
+.codex/*.local.*
+.agents/*.local.*

@@ -10,15 +10,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - uses: jdx/mise-action@v3
+      - name: Setup Go
+        uses: actions/setup-go@v5
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          go-version-file: go.mod
 
       - name: Build
-        run: mise run build
+        run: make build
 
       - name: Run tests
-        run: mise run test
+        run: make test
 
       - name: Format
         run: |
@@ -32,4 +33,4 @@ jobs:
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v8
         with:
-          install-mode: none
+          version: v2.7.2

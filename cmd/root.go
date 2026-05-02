@@ -8,7 +8,7 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "go-grip [file]",
+	Use:   "grip [file]",
 	Short: "Render markdown document as html",
 	Args:  cobra.MatchAll(cobra.OnlyValidArgs),
 	RunE: func(cmd *cobra.Command, args []string) error {
