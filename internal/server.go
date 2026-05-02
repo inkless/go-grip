@@ -93,7 +93,12 @@ func (s *Server) Serve(file string) error {
 func (s *Server) newHandler(dir http.Dir) http.Handler {
 	fileServer := http.FileServer(dir)
 	mux := http.NewServeMux()
-	mux.Handle("/static/", http.FileServer(http.FS(defaults.StaticFiles)))
+	staticFS := http.FileServer(http.FS(defaults.StaticFiles))
+	mux.Handle("/static/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		setNoCacheHeaders(w)
+		stripCacheValidators(r)
+		staticFS.ServeHTTP(w, r)
+	}))
 
 	regex := regexp.MustCompile(`(?i)\.md$`)
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
