@@ -1,17 +1,54 @@
+/* Theme variables. Each scope redefines the active palette so rules
+   below only have to reference `var(--explorer-foo)` once. Order:
+   default light  →  @media dark (OS prefers dark)  →  [data-theme="dark"]
+   (user toggled dark)  →  [data-theme="light"] (user toggled light, must
+   beat the media-query when OS is dark). */
 :root {
   --explorer-width: 260px;
-  --explorer-bg-light: #f6f8fa;
-  --explorer-bg-dark: #161b22;
-  --explorer-border-light: #d0d7de;
-  --explorer-border-dark: #30363d;
-  --explorer-text-light: #1f2328;
-  --explorer-text-dark: #e6edf3;
-  --explorer-hover-light: #eaeef2;
-  --explorer-hover-dark: #21262d;
-  --explorer-current-light: #ddf4ff;
-  --explorer-current-dark: #1f2d3d;
-  --explorer-link-light: #0969da;
-  --explorer-link-dark: #58a6ff;
+
+  --explorer-bg: #f6f8fa;
+  --explorer-border: #d0d7de;
+  --explorer-text: #1f2328;
+  --explorer-hover: #eaeef2;
+  --explorer-current-bg: #ddf4ff;
+  --explorer-current-fg: #0969da;
+  --explorer-toggle-border: #d0d7de;
+  --explorer-toggle-fg: #656d76;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --explorer-bg: #161b22;
+    --explorer-border: #30363d;
+    --explorer-text: #e6edf3;
+    --explorer-hover: #21262d;
+    --explorer-current-bg: #1f2d3d;
+    --explorer-current-fg: #58a6ff;
+    --explorer-toggle-border: #484f58;
+    --explorer-toggle-fg: #8b949e;
+  }
+}
+
+[data-theme="dark"] {
+  --explorer-bg: #161b22;
+  --explorer-border: #30363d;
+  --explorer-text: #e6edf3;
+  --explorer-hover: #21262d;
+  --explorer-current-bg: #1f2d3d;
+  --explorer-current-fg: #58a6ff;
+  --explorer-toggle-border: #484f58;
+  --explorer-toggle-fg: #8b949e;
+}
+
+[data-theme="light"] {
+  --explorer-bg: #f6f8fa;
+  --explorer-border: #d0d7de;
+  --explorer-text: #1f2328;
+  --explorer-hover: #eaeef2;
+  --explorer-current-bg: #ddf4ff;
+  --explorer-current-fg: #0969da;
+  --explorer-toggle-border: #d0d7de;
+  --explorer-toggle-fg: #656d76;
 }
 
 /* Sidebar shell */
@@ -21,9 +58,9 @@
   left: 0;
   bottom: 0;
   width: var(--explorer-width);
-  background: var(--explorer-bg-light);
-  border-right: 1px solid var(--explorer-border-light);
-  color: var(--explorer-text-light);
+  background: var(--explorer-bg);
+  border-right: 1px solid var(--explorer-border);
+  color: var(--explorer-text);
   overflow-y: auto;
   z-index: 998;
   transform: translateX(-100%);
@@ -31,25 +68,6 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
   font-size: 13px;
   line-height: 1.5;
-}
-
-@media (prefers-color-scheme: dark) {
-  .file-explorer {
-    background: var(--explorer-bg-dark);
-    border-right-color: var(--explorer-border-dark);
-    color: var(--explorer-text-dark);
-  }
-}
-
-[data-theme="dark"] .file-explorer {
-  background: var(--explorer-bg-dark);
-  border-right-color: var(--explorer-border-dark);
-  color: var(--explorer-text-dark);
-}
-[data-theme="light"] .file-explorer {
-  background: var(--explorer-bg-light);
-  border-right-color: var(--explorer-border-light);
-  color: var(--explorer-text-light);
 }
 
 body.explorer-open .file-explorer {
@@ -82,14 +100,8 @@ body.explorer-open .file-explorer {
 }
 .file-explorer details > ul {
   padding-left: 14px;
-  border-left: 1px dashed var(--explorer-border-light);
+  border-left: 1px dashed var(--explorer-border);
   margin-left: 8px;
-}
-[data-theme="dark"] .file-explorer details > ul,
-@media (prefers-color-scheme: dark) {
-  .file-explorer details > ul {
-    border-left-color: var(--explorer-border-dark);
-  }
 }
 
 .file-explorer summary {
@@ -125,53 +137,27 @@ body.explorer-open .file-explorer {
   transform: rotate(90deg);
 }
 .file-explorer summary:hover {
-  background: var(--explorer-hover-light);
+  background: var(--explorer-hover);
 }
 
 .file-explorer a {
   display: block;
   padding: 4px 8px 4px 22px;
   border-radius: 4px;
-  color: var(--explorer-text-light);
+  color: var(--explorer-text);
   text-decoration: none;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .file-explorer a:hover {
-  background: var(--explorer-hover-light);
+  background: var(--explorer-hover);
   text-decoration: none;
 }
 .file-explorer .current > a {
-  background: var(--explorer-current-light);
-  color: var(--explorer-link-light);
+  background: var(--explorer-current-bg);
+  color: var(--explorer-current-fg);
   font-weight: 600;
-}
-
-@media (prefers-color-scheme: dark) {
-  .file-explorer summary:hover,
-  .file-explorer a:hover {
-    background: var(--explorer-hover-dark);
-  }
-  .file-explorer a {
-    color: var(--explorer-text-dark);
-  }
-  .file-explorer .current > a {
-    background: var(--explorer-current-dark);
-    color: var(--explorer-link-dark);
-  }
-}
-
-[data-theme="dark"] .file-explorer summary:hover,
-[data-theme="dark"] .file-explorer a:hover {
-  background: var(--explorer-hover-dark);
-}
-[data-theme="dark"] .file-explorer a {
-  color: var(--explorer-text-dark);
-}
-[data-theme="dark"] .file-explorer .current > a {
-  background: var(--explorer-current-dark);
-  color: var(--explorer-link-dark);
 }
 
 /* Hamburger toggle button */
@@ -181,7 +167,7 @@ body.explorer-open .file-explorer {
   left: 20px;
   z-index: 1000;
   background: transparent;
-  border: 1px solid #d0d7de;
+  border: 1px solid var(--explorer-toggle-border);
   border-radius: 6px;
   width: 32px;
   height: 32px;
@@ -199,22 +185,7 @@ body.explorer-open .file-explorer {
 .explorer-toggle-icon {
   font-size: 14px;
   line-height: 1;
-  color: #656d76;
-}
-
-@media (prefers-color-scheme: dark) {
-  .explorer-toggle {
-    border-color: #484f58;
-  }
-  .explorer-toggle-icon {
-    color: #8b949e;
-  }
-}
-[data-theme="dark"] .explorer-toggle {
-  border-color: #484f58;
-}
-[data-theme="dark"] .explorer-toggle-icon {
-  color: #8b949e;
+  color: var(--explorer-toggle-fg);
 }
 
 /* Backdrop for mobile overlay */
