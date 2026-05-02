@@ -101,17 +101,25 @@ body.explorer-open .file-explorer {
   display: flex;
   align-items: center;
   font-weight: 500;
+  background: transparent;
 }
-.file-explorer summary::-webkit-details-marker {
+.file-explorer summary::-webkit-details-marker,
+.file-explorer summary::marker {
   display: none;
+  content: "";
 }
 .file-explorer summary::before {
-  content: "▸";
+  content: "";
   display: inline-block;
-  width: 14px;
-  font-size: 10px;
-  transition: transform 0.1s;
+  width: 0;
+  height: 0;
+  margin-right: 6px;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 5px solid currentColor;
   opacity: 0.6;
+  transition: transform 0.12s;
+  transform-origin: 25% 50%;
 }
 .file-explorer details[open] > summary::before {
   transform: rotate(90deg);

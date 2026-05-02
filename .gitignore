@@ -7,3 +7,5 @@ bin
 .claude/*.local.*
 .codex/*.local.*
 .agents/*.local.*
+.playwright-mcp/
+*.png

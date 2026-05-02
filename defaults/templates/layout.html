@@ -36,7 +36,7 @@
     <script src="/static/js/mermaid-init.js"></script>
   </head>
 
-  <body class="markdown-body">
+  <body>
     {{if .FileExplorer}}
     <button id="explorer-toggle" class="explorer-toggle" title="Toggle file explorer" aria-label="Toggle file explorer">
       <span class="explorer-toggle-icon">☰</span>
@@ -54,7 +54,7 @@
       <span class="theme-toggle-icon"></span>
     </button>
     <div class="container">
-      <div {{if .BoundingBox }} class="container-inner" {{end}}>
+      <div class="markdown-body{{if .BoundingBox}} container-inner{{end}}">
         {{ .Content }}
       </div>
     </div>
