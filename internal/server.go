@@ -117,9 +117,15 @@ func (s *Server) newHandler(dir http.Dir) http.Handler {
 					title = strings.TrimSuffix(base, path.Ext(base))
 				}
 
+				explorer := ""
+				if tree, terr := BuildTree(string(dir)); terr == nil {
+					explorer = RenderTree(tree, r.URL.Path)
+				}
+
 				err = serveTemplate(w, htmlStruct{
 					Title:        html.EscapeString(title),
 					Content:      string(htmlContent),
+					FileExplorer: explorer,
 					BoundingBox:  s.boundingBox,
 					CssCodeLight: getCssCode("github"),
 					CssCodeDark:  getCssCode("github-dark"),
@@ -163,6 +169,7 @@ func readToString(dir http.Dir, filename string) ([]byte, error) {
 type htmlStruct struct {
 	Title        string
 	Content      string
+	FileExplorer string
 	BoundingBox  bool
 	CssCodeLight string
 	CssCodeDark  string

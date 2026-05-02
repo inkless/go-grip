@@ -25,8 +25,10 @@
     <link rel="stylesheet" href="/static/css/mathjax.css" />
     <link rel="stylesheet" href="/static/css/theme-switch.css" />
     <link rel="stylesheet" href="/static/css/width-toggle.css" />
+    <link rel="stylesheet" href="/static/css/file-explorer.css" />
     <script src="/static/js/theme-switch.js"></script>
     <script src="/static/js/width-toggle.js"></script>
+    <script src="/static/js/file-explorer.js"></script>
     <script src="/static/js/clipboard-copy.js"></script>
     <script src="/static/js/mathjax-options.js"></script>
     <script src="/static/js/tex-mml-chtml.js"></script>
@@ -35,6 +37,16 @@
   </head>
 
   <body class="markdown-body">
+    {{if .FileExplorer}}
+    <button id="explorer-toggle" class="explorer-toggle" title="Toggle file explorer" aria-label="Toggle file explorer">
+      <span class="explorer-toggle-icon">☰</span>
+    </button>
+    <aside id="file-explorer" class="file-explorer">
+      <div class="file-explorer-header">Files</div>
+      <nav class="file-tree">{{ .FileExplorer }}</nav>
+    </aside>
+    <div id="explorer-backdrop" class="explorer-backdrop"></div>
+    {{end}}
     <button id="width-toggle" class="width-toggle" title="Toggle width">
       <span class="width-toggle-icon"></span>
     </button>
